@@ -44,10 +44,10 @@ namespace McDonald_v2
         }
         static string[] Scopes = { SheetsService.Scope.SpreadsheetsReadonly };
         static string ApplicationName = "Google Sheets API .NET Quickstart";
+        static SheetsService service = null;
         public void Start()
         {
             UserCredential credential;
-            Debug.WriteLine("yo");
 
             using (var stream =
                 new FileStream("./credential.json", FileMode.Open, FileAccess.ReadWrite))
@@ -65,7 +65,7 @@ namespace McDonald_v2
             }
 
             // Create Google Sheets API service.
-            var service = new SheetsService(new BaseClientService.Initializer()
+            service = new SheetsService(new BaseClientService.Initializer()
             {
                 HttpClientInitializer = credential,
                 ApplicationName = ApplicationName,
@@ -73,9 +73,8 @@ namespace McDonald_v2
 
             // Define request parameters.
             String spreadsheetId = "12p5CYuxOtGLpxwFdDU5ZQ0fx389mgPTrfc8zUtOhAZk";
-            String range = "A1:C1";
-            SpreadsheetsResource.ValuesResource.GetRequest request =
-                    service.Spreadsheets.Values.Get(spreadsheetId, range);
+            String range = "A1:B";
+            SpreadsheetsResource.ValuesResource.GetRequest request = service.Spreadsheets.Values.Get(spreadsheetId, range);
 
             // Prints the names and majors of students in a sample spreadsheet:
             // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
@@ -86,13 +85,19 @@ namespace McDonald_v2
                 foreach (var row in values)
                 {
                     // Print columns A and E, which correspond to indices 0 and 4.
-                    Debug.WriteLine( row[0] + ", " + row[1] + ", " + row[2]);
+                    Debug.WriteLine("Iog: " + row[0] + "| ID: " + row[1]);
                 }
             }
             else
             {
                 Debug.WriteLine("No data found.");
             }
+        }
+
+        public int getLastId()
+        {
+
+            return -1;
         }
     }
 }
