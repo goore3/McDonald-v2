@@ -78,11 +78,10 @@ namespace McDonald_v2
 
             // Prints the names and majors of students in a sample spreadsheet:
             // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
-            ValueRange response = request.Execute();
-            IList<IList<Object>> values = response.Values;
+            
 
 
-            UserHandler uH = new UserHandler();
+            UserHandler uH = new UserHandler(request);
         }
     }
 
@@ -94,7 +93,7 @@ namespace McDonald_v2
         bool isServed;
 
 
-        public User(float nLog, float nId)
+        public User(string nLog, float nId)
         {
             log = nLog;
             id = nId;
@@ -128,9 +127,13 @@ namespace McDonald_v2
         List<User> userList = new List<User>();
         float id;
          
-        public UserHandler()
+        public UserHandler(SpreadsheetsResource.ValuesResource.GetRequest request)
         {
             id = 1;
+
+            ValueRange response = request.Execute();
+            IList<IList<Object>> values = response.Values;
+
             if (values != null && values.Count > 0)
             {
                 foreach (var row in values)
@@ -138,7 +141,7 @@ namespace McDonald_v2
                     // Print columns A and E, which correspond to indices 0 and 4.
                     Debug.WriteLine(row[0] + ", " + row[1] + ", " + row[2]);
 
-                    User nUser = new User(row[0], id);
+                    User nUser = new User(row[0].ToString(), id);
                     id++;
 
                     userList.Add(nUser);
