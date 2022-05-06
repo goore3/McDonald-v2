@@ -34,6 +34,11 @@ namespace McDonald_v2
             McDonaldInterface mcDonald = new McDonaldInterface();
             mcDonald.Start();
         }
+
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+
+        }
     }
 
     public class McDonaldInterface
@@ -139,7 +144,7 @@ namespace McDonald_v2
                 foreach (var row in values)
                 {
                     // Print columns A and E, which correspond to indices 0 and 4.
-                    Debug.WriteLine(row[0] + ", " + row[1] + ", " + row[2]);
+                    Debug.WriteLine(row[0] + ", " + row[1]);
 
                     User nUser = new User(row[0].ToString(), id);
                     id++;
