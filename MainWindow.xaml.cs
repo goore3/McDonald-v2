@@ -81,12 +81,68 @@ namespace McDonald_v2
             // https://docs.google.com/spreadsheets/d/1BxiMVs0XRA5nFMdKvBdBZjgmUUqptlbs74OgvE2upms/edit
             ValueRange response = request.Execute();
             IList<IList<Object>> values = response.Values;
+
+
+            UserHandler uH = new UserHandler();
+        }
+    }
+
+
+    public class User
+    {
+        string log;
+        float id;
+        bool isServed;
+
+
+        public User(float nLog, float nId)
+        {
+            log = nLog;
+            id = nId;
+            isServed = false;
+        }
+
+        public void UserServed()
+        {
+            isServed = true;
+        }
+
+        public string GetLog()
+        {
+            return log;
+        }
+
+        public bool GetStatus()
+        {
+            return isServed;
+        }
+
+        public float GetId()
+        {
+            return id;
+        }
+
+    }
+
+    public class UserHandler
+    {
+        List<User> userList = new List<User>();
+        float id;
+         
+        public UserHandler()
+        {
+            id = 1;
             if (values != null && values.Count > 0)
             {
                 foreach (var row in values)
                 {
                     // Print columns A and E, which correspond to indices 0 and 4.
-                    Debug.WriteLine( row[0] + ", " + row[1] + ", " + row[2]);
+                    Debug.WriteLine(row[0] + ", " + row[1] + ", " + row[2]);
+
+                    User nUser = new User(row[0], id);
+                    id++;
+
+                    userList.Add(nUser);
                 }
             }
             else
@@ -94,5 +150,7 @@ namespace McDonald_v2
                 Debug.WriteLine("No data found.");
             }
         }
+
+
     }
 }
